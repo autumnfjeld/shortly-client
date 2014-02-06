@@ -12,12 +12,14 @@ window.Shortly = Backbone.View.extend({
   ),
 
   events: {
-    "click li a.index":  "renderIndexView",
-    "click li a.create": "renderCreateView"
+    "click li a.index"  :  "renderIndexView",
+    "click li a.create" : "renderCreateView",
+    "submit"       : "renderSearchResult"
   },
 
   initialize: function(){
     console.log( "Shortly is running" );
+    this.links = new Shortly.Links();
     $('body').append(this.render().el);
     this.renderIndexView(); // default view
   },
@@ -28,11 +30,30 @@ window.Shortly = Backbone.View.extend({
   },
 
   renderIndexView: function(e){
-    e && e.preventDefault();
-    var links = new Shortly.Links();
-    var linksView = new Shortly.LinksView( {collection: links} );
-    this.$el.find('#container').html( linksView.render().el );
+    //var links = new Shortly.Links();
+    var linksView = new Shortly.LinksView( {collection: this.links} );
+    this.$el.find('#container').html( linksView.render().el );  //this sets html for #containter (overwrites)
+    this.searchBar();
     this.updateNav('index');
+  },
+
+ renderSearchResult: function(e){
+    e && e.preventDefault(); //need this otherwise form submit refreshes page
+    var $form = this.$el.find('form .searchtext')
+    var searchString = $form.val();
+    console.log('checkintou', searchString);
+    var view = new Shortly.LinkSearchView( {collection: this.links} );
+    this.$el.find('#container').html(view.addResult(searchString));
+  },
+
+  searchBar: function(e){
+    e && e.preventDefault();
+    var $search = $('<div class "searchbar"> \
+        <form> \
+          Search <input class="searchtext" type="text" name="search">\
+        </form>\
+      </div>');
+    this.$el.find('#container').prepend($search);
   },
 
   renderCreateView: function(e){

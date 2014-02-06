@@ -13,12 +13,21 @@ Shortly.LinksView = Backbone.View.extend({
   },
 
   addAll: function(){
-    this.collection.forEach(this.addOne, this);
+    //this.collection.forEach(this.addOne, this);
+    this.collection.sortBy(function(item){
+        return -item.get("visits");
+      }, this).forEach(this.addOne, this);
+  },
+
+  addSearchResult: function(searchString){
+    console.log('here is', searchString);
+    this.addOne(this.collection.where( {title : searchString}));
   },
 
   addOne: function(item){
     var view = new Shortly.LinkView( {model: item} );
     this.$el.append(view.render().el);
-  }
+  },
+
 
 });
