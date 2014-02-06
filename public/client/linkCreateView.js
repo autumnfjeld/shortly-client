@@ -28,7 +28,7 @@ Shortly.LinkCreateView = Backbone.View.extend({
     link.on('sync',    this.success,      this );
     link.on('error',   this.failure,      this );
     $form.val('');
-    link.save();
+    link.save();  //what does this sync with?
   },
 
   success: function(link){

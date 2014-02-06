@@ -31,3 +31,6 @@ Shortly.LinksView = Backbone.View.extend({
 
 
 });
+
+//TODO : create template for this that will include search bar, 
+//then will refesh subcontainer for list or search results

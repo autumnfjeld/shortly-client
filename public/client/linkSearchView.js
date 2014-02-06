@@ -13,8 +13,7 @@ Shortly.LinkSearchView = Backbone.View.extend({
 
   addResult: function(searchString){
     //e.preventDefault();
-
-    //console.log('here is', searchString);
+    console.log('here is', searchString);
     //why doesn't findWhere work???!?!?!
     //var result = this.collection.findWhere( {title : searchString});
     var result = this.collection.find( function(item){

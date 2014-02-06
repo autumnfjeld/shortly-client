@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131022053000) do
+ActiveRecord::Schema.define(version: 20140206213949) do
 
   create_table "clicks", force: true do |t|
     t.integer  "link_id"
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 20131022053000) do
     t.datetime "updated_at"
     t.integer  "visits",     default: 0
     t.string   "title"
+  end
+
+  create_table "users", force: true do |t|
+    t.string   "username"
+    t.string   "email"
+    t.string   "pw_hash"
+    t.string   "pw_salt"
+    t.string   "session_token"
+    t.boolean  "logged_in"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

@@ -23,7 +23,6 @@ window.Shortly = Backbone.View.extend({
     console.log( "Shortly is running" );
     this.links = new Shortly.Links();
     $('body').append(this.render().el);
-    //this.renderIndexView(); // default view
     this.renderLoginView();
   },
 
@@ -33,14 +32,15 @@ window.Shortly = Backbone.View.extend({
   },
 
   renderLoginView : function(e){
-    e && e.preventDefault(); //need this otherwise form submit refreshes page
+    e && e.preventDefault();
     var userLoginView = new Shortly.UserLoginView();
     this.$el.find('#container').html(userLoginView.render().el);
     this.updateNav('login');
   },
 
   renderLinksView: function(e){
-    //var links = new Shortly.Links();
+    e && e.preventDefault();
+
     var linksView = new Shortly.LinksView( {collection: this.links} );
     this.$el.find('#container').html( linksView.render().el );  //this sets html for #containter (overwrites)
     this.searchBar();
@@ -51,9 +51,9 @@ window.Shortly = Backbone.View.extend({
     e && e.preventDefault(); //need this otherwise form submit refreshes page
     var $form = this.$el.find('form .searchtext')
     var searchString = $form.val();
-    console.log('check searchString', searchString);
     var view = new Shortly.LinkSearchView( {collection: this.links} );
-    this.$el.find('#container').html(view.addResult(searchString));
+    this.$el.find('#container').html("Search result should go here")
+    //this.$el.find('#container').html(view.addResult(searchString));
   },
 
   renderCreateView: function(e){
