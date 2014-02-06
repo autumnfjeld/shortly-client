@@ -19,7 +19,7 @@ Shortly.LinkSearchView = Backbone.View.extend({
       return  item.get('title') === searchString;
     });
     console.log('result', result);
-    this.addOne(result);
+    //this.addOne(result);
     //this.addOne(this.collection.where( {title : searchString}));
   },
 
