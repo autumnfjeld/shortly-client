@@ -2,15 +2,14 @@ Shortly.UserLoginView = Backbone.View.extend({
 
   className: 'userLogin',
 
-    template: _.template(' <div class="userInput"> \
-    <form> \
-        username: <input id="username" type="text" name="username"> \
-        password: <input id="password" type="password" name="password"> \
-        <input type="submit" value="Log in"> \
-    </form> \
-    <img class="spinner" src="/spiffygif_46x46.gif"> \
-    <div class="message"></div>
-
+  template: _.template(' <div class="userInput"> \
+      <form> \
+          username<input class="userinfo" type="text" id="username" name="username"> \
+          email <input class="userinfo" type="email" name="email"> \
+          password <input class="userinfo" type="password" name="password"> \
+          <input type="submit" value="Log in"> \
+      </form> \
+      <div class="confirm"></div> \
     </div>'
   ),
 
@@ -23,9 +22,10 @@ Shortly.UserLoginView = Backbone.View.extend({
     return this;
   },
     // will need model for user info
-  userAuthenticate: function(){
-    
-
+  userAuthenticate: function(e){
+    e.preventDefault();
+    var $username = this.$el.find('form #username')
+    console.log('Authenticating', $username );
   }
 
 });

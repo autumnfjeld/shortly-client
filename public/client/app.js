@@ -4,6 +4,7 @@ window.Shortly = Backbone.View.extend({
       <h1>Shortly</h1> \
       <div class="navigation"> \
       <ul> \
+        <li><a href="#" class="login">Login</a></li> \
         <li><a href="#" class="all">All Links</a></li> \
         <li><a href="#" class="create">Shorten</a></li> \
       </ul> \
@@ -12,9 +13,10 @@ window.Shortly = Backbone.View.extend({
   ),
 
   events: {
-    "click li a.all"  :  "renderLinksView",
-    "click li a.create" : "renderCreateView",
-    "submit"       : "renderSearchResult"
+    "click li a.all"      : "renderLinksView",
+    "click li a.create"   : "renderCreateView",
+    "click li a.login"    : "renderLoginView",
+    "submit form#search"  : "renderSearchResult"
   },
 
   initialize: function(){
@@ -22,12 +24,19 @@ window.Shortly = Backbone.View.extend({
     this.links = new Shortly.Links();
     $('body').append(this.render().el);
     //this.renderIndexView(); // default view
-    this.renderCreateView();
+    this.renderLoginView();
   },
 
   render: function(){
     this.$el.html( this.template() );
     return this;
+  },
+
+  renderLoginView : function(e){
+    e && e.preventDefault(); //need this otherwise form submit refreshes page
+    var userLoginView = new Shortly.UserLoginView();
+    this.$el.find('#container').html(userLoginView.render().el);
+    this.updateNav('login');
   },
 
   renderLinksView: function(e){
@@ -42,19 +51,9 @@ window.Shortly = Backbone.View.extend({
     e && e.preventDefault(); //need this otherwise form submit refreshes page
     var $form = this.$el.find('form .searchtext')
     var searchString = $form.val();
-    console.log('checkintou', searchString);
+    console.log('check searchString', searchString);
     var view = new Shortly.LinkSearchView( {collection: this.links} );
     this.$el.find('#container').html(view.addResult(searchString));
-  },
-
-  searchBar: function(e){
-    e && e.preventDefault();
-    var $search = $('<div class "searchbar"> \
-        <form> \
-          Search <input class="searchtext" type="text" name="search">\
-        </form>\
-      </div>');
-    this.$el.find('#container').prepend($search);
   },
 
   renderCreateView: function(e){
@@ -62,6 +61,16 @@ window.Shortly = Backbone.View.extend({
     var linkCreateView = new Shortly.LinkCreateView();
     this.$el.find('#container').html( linkCreateView.render().el );
     this.updateNav('create');
+  },
+
+  searchBar: function(e){
+    e && e.preventDefault();
+    var $search = $('<div class "searchbar"> \
+        <form id="search"> \
+          Search <input class="searchtext" type="text" name="search">\
+        </form>\
+      </div>');
+    this.$el.find('#container').prepend($search);
   },
 
   updateNav: function(className){

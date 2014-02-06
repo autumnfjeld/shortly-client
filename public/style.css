@@ -1,4 +1,5 @@
 body {
+  background-color: #7F6B9C;
   margin: 0;
   margin-top: 10px;
   font-family: arial, sans-serif;
@@ -51,6 +52,9 @@ h1 {
 #container {
   clear: both;
   margin-top: 10px;
+}
+.userInput {
+  padding-top: 100px;
 }
 
 .link {
@@ -105,9 +109,22 @@ form input[type=text] {
   margin-bottom: 5px;
 }
 
-form input[type=text] #id {
-  width: 200;
+form input[name=username], form input[name=email], form input[name=password]  {
+  width: 150;
+  height: 25px;
+  padding: 5px;
+  margin-bottom: 5px;
+  display: block;
 }
+
+/*form input[name=password] {
+  width: 150;
+  height: 25px;
+  padding: 5px;
+  margin-bottom: 5px;
+  display: block;
+}*/
+
 
 .error {
   background-color: #fee;
