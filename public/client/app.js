@@ -4,7 +4,7 @@ window.Shortly = Backbone.View.extend({
       <h1>Shortly</h1> \
       <div class="navigation"> \
       <ul> \
-        <li><a href="#" class="index">All Links</a></li> \
+        <li><a href="#" class="all">All Links</a></li> \
         <li><a href="#" class="create">Shorten</a></li> \
       </ul> \
       </div> \
@@ -12,7 +12,7 @@ window.Shortly = Backbone.View.extend({
   ),
 
   events: {
-    "click li a.index"  :  "renderIndexView",
+    "click li a.all"  :  "renderLinksView",
     "click li a.create" : "renderCreateView",
     "submit"       : "renderSearchResult"
   },
@@ -21,7 +21,8 @@ window.Shortly = Backbone.View.extend({
     console.log( "Shortly is running" );
     this.links = new Shortly.Links();
     $('body').append(this.render().el);
-    this.renderIndexView(); // default view
+    //this.renderIndexView(); // default view
+    this.renderCreateView();
   },
 
   render: function(){
@@ -29,7 +30,7 @@ window.Shortly = Backbone.View.extend({
     return this;
   },
 
-  renderIndexView: function(e){
+  renderLinksView: function(e){
     //var links = new Shortly.Links();
     var linksView = new Shortly.LinksView( {collection: this.links} );
     this.$el.find('#container').html( linksView.render().el );  //this sets html for #containter (overwrites)
