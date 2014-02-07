@@ -5,6 +5,7 @@ require 'digest/sha1'
 require 'pry'
 require 'uri'
 require 'open-uri'
+require 'bcrypt'
 # require 'nokogiri'
 
 ###########################################################
@@ -50,6 +51,13 @@ class Click < ActiveRecord::Base
 end
 
 class User < ActiveRecord::Base
+
+    before_save do |record|
+        record.pw_salt  = BCrypt::Engine.generate_salt
+        puts "aftersalt"
+        record.password = BCrypt::Engine.hash_secret(record.password, record.pw_salt)
+    end
+
 end
 
 ###########################################################
@@ -57,7 +65,31 @@ end
 ###########################################################
 
 get '/' do
-    erb :index  # this looks for index.erb file and displays it 
+    erb :login
+    #erb :index  # this looks for index.erb file and displays it 
+end
+
+get '/login' do
+    erb :login
+end
+
+post '/login' do
+end
+
+get '/signup' do
+    erb :signup
+end
+
+post '/signup' do
+    puts params
+    record = User.find_by_username params[:username]
+    #puts record.inspect
+    unless record.nil?
+        redirect '/login'
+    else
+        record = User.create params
+        redirect '/'
+    end
 end
 
 get '/links' do
@@ -82,6 +114,11 @@ get '/:url' do
     link.clicks.create!
     redirect link.url
 end
+
+
+
+
+
 
 
 ###########################################################

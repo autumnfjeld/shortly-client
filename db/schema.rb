@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20140206213949) do
   create_table "users", force: true do |t|
     t.string   "username"
     t.string   "email"
-    t.string   "pw_hash"
+    t.string   "password"
     t.string   "pw_salt"
     t.string   "session_token"
     t.boolean  "logged_in"
