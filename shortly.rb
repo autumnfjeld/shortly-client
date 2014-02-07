@@ -49,12 +49,15 @@ class Click < ActiveRecord::Base
     belongs_to :link, counter_cache: :visits
 end
 
+class User < ActiveRecord::Base
+end
+
 ###########################################################
 # Routes
 ###########################################################
 
 get '/' do
-    erb :index
+    erb :index  # this looks for index.erb file and displays it 
 end
 
 get '/links' do
@@ -79,6 +82,7 @@ get '/:url' do
     link.clicks.create!
     redirect link.url
 end
+
 
 ###########################################################
 # Utility

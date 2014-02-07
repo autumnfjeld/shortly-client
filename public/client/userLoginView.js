@@ -34,12 +34,6 @@ Shortly.UserLoginView = Backbone.View.extend({
     console.log(user.attributes);
   },
 
-  userAuthenticate: function(e){
-    e.preventDefault();
-    var $username = this.$el.find('form #username')
-    console.log('Authenticating', $username );
-  }
-
 });
 
 
