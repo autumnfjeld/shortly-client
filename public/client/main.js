@@ -1,23 +1,18 @@
 var shortly = angular.module('Shortly', ['ngRoute']);
 
-shortly.run(function($rootScope) {
-  $rootScope.name = "Ari Lerner";
-});
-
-shortly.config(function($routeProvider) {
+shortly.config(function($routeProvider, $locationProvider) {
+  // $locationProvider.html5Mode(true);
   $routeProvider
     // route for the links page
     .when('/', {
       templateUrl : 'client/links.html',
       controller  : 'LinksController'
     })
-
     // route for the about page
-    .when('/shorten', {
+    .when('/shorten', { // shorten
       templateUrl : 'client/shorten.html',
       controller  : 'ShortenController'
     })
-
     //TODO
     .otherwise({
       redirectTo: '/'
@@ -36,12 +31,18 @@ shortly.controller('LinksController', function($scope, $http) {
   })
   .then(function(obj){
     console.log(obj.data);
-    $scope.links = obj.links;
+    $scope.links = obj.data;
   })
 });
 
-shortly.controller('ShortenController', function($scope){
-  $scope.message ="Got to ShortenController";
+shortly.controller('ShortenController', function($scope, $http){
+  $scope.processForm = function(){
+    $http({
+      method : 'POST',
+      url : '/links',
+      data : {url : $scope.url}
+    });
+  };
 });
 
 

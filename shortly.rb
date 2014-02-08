@@ -72,7 +72,7 @@ end
 # Routes
 ###########################################################
 
-['/', '/create'].each do |path|
+['/', '/shorten'].each do |path|
     get path do
         erb :index
     end
@@ -133,15 +133,6 @@ get '/:url' do
     link.clicks.create!
     redirect link.url
 end
-
-# get '/public/client/*' do
-#     puts params[:splat]
-#     #puts settings:public_folder
-#     redirect File.join('client/', params[:splat])
-# end
-
-
-
 
 ###########################################################
 # Utility
