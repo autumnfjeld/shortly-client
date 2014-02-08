@@ -51,22 +51,31 @@ class Click < ActiveRecord::Base
 end
 
 class User < ActiveRecord::Base
+    def authenticate(password)
+        self.password === BCrypt::Engine.hash_secret(password, self.pw_salt)
+    end
 
     before_save do |record|
         record.pw_salt  = BCrypt::Engine.generate_salt
         puts "aftersalt"
         record.password = BCrypt::Engine.hash_secret(record.password, record.pw_salt)
+        record.session_token = Digest::SHA1.hexdigest record.to_s
     end
-
 end
+
+
+# before '/' do
+#     halt redirect('/login') unless logged_in?
+# end
 
 ###########################################################
 # Routes
 ###########################################################
 
-get '/' do
-    erb :login
-    #erb :index  # this looks for index.erb file and displays it 
+['/', '/create'].each do |path|
+    get path do
+        erb :index
+    end
 end
 
 get '/login' do
@@ -74,6 +83,15 @@ get '/login' do
 end
 
 post '/login' do
+    puts "in login function"
+    user = User.find_by_username params[:username]
+    if user.nil?
+        redirect '/signup'
+    else
+        session[:identifier] = user.session_token if user.authenticate(params[:password])
+        puts "found user account #{user.inspect}"
+        redirect '/'
+    end
 end
 
 get '/signup' do
@@ -83,11 +101,12 @@ end
 post '/signup' do
     puts params
     record = User.find_by_username params[:username]
-    #puts record.inspect
+    puts record.inspect
     unless record.nil?
         redirect '/login'
     else
         record = User.create params
+        puts "should be creating new user in db"
         redirect '/'
     end
 end
@@ -115,8 +134,11 @@ get '/:url' do
     redirect link.url
 end
 
-
-
+# get '/public/client/*' do
+#     puts params[:splat]
+#     #puts settings:public_folder
+#     redirect File.join('client/', params[:splat])
+# end
 
 
 

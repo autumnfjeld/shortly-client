@@ -1,5 +1,36 @@
-<script>
-  $(function(){
-    new Shortly();
-  });
-</script>
+
+<div ng-app="Shortly">
+    <h2>Short Links</h2>
+
+      <div class="navigation">
+        <ul class="{{active}}" ng-click="$event.preventDefault()">
+          <!-- When a link in the menu is clicked, we set the active variable -->
+          <li><a href="#/" class="all" ng-click="active='all'">All Links</a></li>
+          <li><a href="/shorten" class="shorten" ng-click="active='shorten'">Shorten</a></li>
+        </ul>
+      </div>
+
+      <div ng-controller="MainController">
+        <div id="container">
+          <div ng-view>
+          </div>
+        </div>
+      </div>
+
+</div>
+
+
+<!-- 
+    <div ng-controller="MyController">
+      {{ person.name }}
+    </div>
+ --><!-- 
+    <div ng-controller="FrameController">
+      <div ng-controller="ChildController">
+        {{person.greeted}}
+        <input type="text" ng-model="person.name" placeholder="Name"></input>
+        <a ng-click="sayHello()">Say hello</a>
+      </div>
+      {{ person }} <br>
+      {{ person.name}}
+    </div> -->
