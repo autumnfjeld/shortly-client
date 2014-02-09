@@ -157,3 +157,7 @@ form input[name=username], form input[name=email], form input[name=password]  {
 .creator .message {
   clear: both;
 }
+
+#logoutButton {
+  float: right;
+}

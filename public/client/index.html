@@ -8,9 +8,10 @@
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+  <button id="logoutButton" ng-controller="LogoutController" ng-click="logout()" ng-hide="hideLogout">Logout</button>
   <h2>Short Links</h2>
   <div ng-app="Shortly">
-      <div class="navigation" ng-if="loggedIn">
+      <div class="navigation">
         <ul>
           <li><a href="/#/" class="all">All Links</a></li>
           <li><a href="/#/shorten" class="shorten">Shorten</a></li>
