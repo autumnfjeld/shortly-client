@@ -29,6 +29,23 @@ end
 # turn off root element rendering in JSON
 ActiveRecord::Base.include_root_in_json = false
 
+get '/' do
+    File.read(File.join(File.dirname(__FILE__), "public/client/index.html"))
+end
+# set :sessions => true
+# register do
+#   def auth (type)
+#     condition do
+#       if (session[:user_id])
+#         user = User.find_by_id(session[:user_id])
+#         id = user.id unless !user
+#       end
+#       redirect "/login" unless session[:user_id] && session[:user_id] == id
+#       ##redirect "/login" unless session[:user_id] && session[:user_id] == User.find(session[:user_id]).id
+#     end
+#   end
+# end
+
 ###########################################################
 # Models
 ###########################################################
@@ -72,30 +89,40 @@ end
 # Routes
 ###########################################################
 
-['/', '/shorten'].each do |path|
-    get path do
-        erb :index
-    end
-end
+# ['/', '/shorten'].each do |path|
+#     get path do
+#         erb :index
+#     end
+# end
 
-get '/login' do
-    erb :login
-end
+# get '/login' do
+#     erb :login
+# end
 
-post '/login' do
-    puts "in login function"
-    user = User.find_by_username params[:username]
-    if user.nil?
-        redirect '/signup'
-    else
-        session[:identifier] = user.session_token if user.authenticate(params[:password])
-        puts "found user account #{user.inspect}"
-        redirect '/'
+# post '/login' do
+    # puts "in login function"
+    # user = User.find_by_username params[:username]
+    # if user.nil?
+    #     redirect '/signup'
+    # else
+    #     session[:identifier] = user.session_token if user.authenticate(params[:password])
+    #     puts "found user account #{user.inspect}"
+    #     redirect '/'
+    # end
+# end
+
+get '/users' do
+    user = User.find_by_username params[:user_id]
+    if user == nil
+        halt 404
     end
+    # get params
+    # query activerecord
+    # return user info
 end
 
 get '/signup' do
-    erb :signup
+    File.read(File.join(File.dirname(__FILE__), "public/client/signup.html"))
 end
 
 post '/signup' do
@@ -103,7 +130,7 @@ post '/signup' do
     record = User.find_by_username params[:username]
     puts record.inspect
     unless record.nil?
-        redirect '/login'
+        halt 404
     else
         record = User.create params
         puts "should be creating new user in db"

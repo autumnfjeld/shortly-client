@@ -53,6 +53,11 @@ h1 {
   clear: both;
   margin-top: 10px;
 }
+
+#linksContainer {
+  background-color: #eee;
+}
+
 .userInput {
   padding-top: 100px;
 }

@@ -1,7 +1,23 @@
-<h2>Short Links</h2>
-<div class="navigation">
-  <ul class="{{active}}" ng-click="$event.preventDefault()">
-    <li><a href="/" class="all">All Links</a></li>
-    <li><a href="/shorten" class="shorten">Shorten</a></li>
-  </ul>
-</div>
+<html>
+<head>
+  <title>Shortly</title>
+  <script src="lib/underscore.js"></script>
+  <script src="lib/angular.js"></script>
+  <script src="lib/angular-route.js"></script>
+  <script src="/client/main.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <h2>Short Links</h2>
+  <div ng-app="Shortly">
+      <div class="navigation" ng-if="loggedIn">
+        <ul>
+          <li><a href="/#/" class="all">All Links</a></li>
+          <li><a href="/#/shorten" class="shorten">Shorten</a></li>
+        </ul>
+      </div>
+    <div ng-view=''>
+    </div>
+  </div>
+</body>
+</html>

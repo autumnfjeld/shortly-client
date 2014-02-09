@@ -1,8 +1,23 @@
 <!-- shorten.html -->
+
+  <button ng-controller="LogoutController" ng-click="logout()" ng-hide="hideLogout">Logout</button>
 <div ng-controller="ShortenController">
   <div class "searchbar">
     <form id="search" ng-submit="processForm()">
-      Search <input ng-model="url" class="searchtext" type="text" name="search">
+      Search <input ng-model="url" type="text">
     </form>
   </div>
+
+  <div class="link" id='linksContainer' ng-hide="infoHide">
+    <img src="/redirect_icon.png"/>
+    <div class="info">
+      <div class="title"> {{link.title}} </div>
+      <div class="original"> {{link.url}} </div>
+      <a href="{{ link.base_url }}/{{ link.code }}" ng-click="getClicks()">
+        {{link.base_url }}/{{ link.code }}
+      </a>
+    </div>
+  </div>
+  <img class="spinner" src="/spiffygif_46x46.gif" ng-hide="spinnerHide">
+  <div class="message">{{message}}</div>
 </div>
