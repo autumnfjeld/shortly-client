@@ -1,0 +1,19 @@
+<!-- links.html -->
+<div>
+  <button ng-click="predicate = 'visits'; reverse = toggle()" >Visits</button>
+  <button ng-click="predicate = 'title'; reverse = toggle()">Title</button>
+  <input type="text" ng-model="search"></input>
+</div>
+<div id="linksContainer">
+  <div ng-repeat = "link in links | orderBy:predicate:reverse | filter:search" class="link">
+    <img src="/redirect_icon.png"/>
+    <div class="info">
+      <div class="visits"><span class="count">{{ link.visits }}</span>Visits</div>
+      <div class="title"> {{link.title}} </div>
+      <div class="original"> {{link.url}} </div>
+      <a href="{{ link.base_url }}/{{ link.code }}">
+        {{link.base_url }}/{{ link.code }}
+      </a>
+    </div>
+  </div>
+</div>
